@@ -2,7 +2,7 @@ import tensorflow as tf
 from tensorflow import keras
 import numpy as np
 import matplotlib.pyplot as plt
-
+tf.get_logger().setLevel('ERROR')
 data = keras.datasets.fashion_mnist
 
 (train_images, train_labels), (test_images, test_labels) = data.load_data()
@@ -28,4 +28,9 @@ model = keras.Sequential([
     keras.layers.Dense(10, activation='softmax')
 ])
 
-model.compile(optimizer='adam', Loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+model.fit(train_images, train_labels, epochs=20)
+test_loss, test_acc = model.evaluate(test_images, test_labels)
+
+# 5 epochs results in 87% accuracy and 20 epochs in 89%
+print("Tested: ", test_acc)
