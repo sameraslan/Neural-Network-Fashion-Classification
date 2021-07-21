@@ -29,8 +29,20 @@ model = keras.Sequential([
 ])
 
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
-model.fit(train_images, train_labels, epochs=20)
+model.fit(train_images, train_labels, epochs=5)
 test_loss, test_acc = model.evaluate(test_images, test_labels)
 
 # 5 epochs results in 87% accuracy and 20 epochs in 89%
-print("Tested: ", test_acc)
+#print("Tested: ", test_acc)
+
+prediction = model.predict(test_images)
+
+for i in range(5):
+    plt.grid(False)
+    plt.imshow(test_images[i], cmap=plt.cm.binary)
+    plt.xlabel("Actual: ", test_labels[i])
+    plt.title("Prediction: ", class_names[np.argmax(prediction[i])])
+    plt.show()
+    
+#print(prediction[0])
+#print(class_names[np.argmax(prediction[0])])
